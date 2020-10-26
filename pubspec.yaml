@@ -1,7 +1,7 @@
 name: photograffitiflutter
 description: A photo graffiti Flutter plugin.
 version: 0.0.1
-author:
+#author: wujianneng
 homepage: https://github.com/wujianneng/photo_graffiti_flutter
 
 environment:
