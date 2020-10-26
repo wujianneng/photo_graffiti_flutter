@@ -2,7 +2,7 @@ name: photograffitiflutter
 description: A photo graffiti Flutter plugin.
 version: 0.0.1
 author:
-homepage:
+homepage: https://github.com/wujianneng/photo_graffiti_flutter
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -31,9 +31,9 @@ flutter:
     platforms:
       android:
         package: com.infitack.photograffitiflutter
-        pluginClass: PhotograffitiflutterPlugin
+        pluginClass: DrawImageView
       ios:
-        pluginClass: PhotograffitiflutterPlugin
+        pluginClass: DrawImageView
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

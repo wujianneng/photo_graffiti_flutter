@@ -6,9 +6,9 @@ import 'MyAnimatedFloatingActionButton.dart';
 import 'PictureView.dart';
 
 class DrawImageView extends StatefulWidget {
-  List<PictureView> imageList;
+  List<String> imageListUrls;
 
-  DrawImageView(this.imageList);
+  DrawImageView(this.imageListUrls);
 
   @override
   _DrawImageViewState createState() => _DrawImageViewState();
@@ -20,6 +20,8 @@ class _DrawImageViewState extends State<DrawImageView>
   Color paintColor = Colors.red;
   int currentPictureIndex = 0;
 
+  List<PictureView> imageList = List();
+
   MyAnimatedFloatingActionButton actionButton;
 
   @override
@@ -29,10 +31,14 @@ class _DrawImageViewState extends State<DrawImageView>
   void initState() {
     // TODO: implement initState
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+
+    widget.imageListUrls.forEach((url) {
+      imageList.add(PictureView(url, () {
+        setState(() {});
+      }));
+    });
 
     actionButton = MyAnimatedFloatingActionButton(<Widget>[
       FloatingActionButton(
@@ -40,7 +46,7 @@ class _DrawImageViewState extends State<DrawImageView>
         backgroundColor: Colors.red,
         onPressed: () {
           actionButton.animate();
-          widget.imageList[currentPictureIndex].changePaintColor(Colors.red);
+          imageList[currentPictureIndex].changePaintColor(Colors.red);
           actionButton.refreshUi(Colors.red);
           paintColor = Colors.red;
         },
@@ -50,7 +56,7 @@ class _DrawImageViewState extends State<DrawImageView>
         backgroundColor: Colors.yellow,
         onPressed: () {
           actionButton.animate();
-          widget.imageList[currentPictureIndex].changePaintColor(Colors.yellow);
+          imageList[currentPictureIndex].changePaintColor(Colors.yellow);
           actionButton.refreshUi(Colors.yellow);
           paintColor = Colors.yellow;
         },
@@ -60,14 +66,14 @@ class _DrawImageViewState extends State<DrawImageView>
         backgroundColor: Colors.blue,
         onPressed: () {
           actionButton.animate();
-          widget.imageList[currentPictureIndex].changePaintColor(Colors.blue);
+          imageList[currentPictureIndex].changePaintColor(Colors.blue);
           actionButton.refreshUi(Colors.blue);
           paintColor = Colors.blue;
         },
       ),
     ],
-        widget.imageList[currentPictureIndex].getPaintColor(),
-        widget.imageList[currentPictureIndex].getPaintColor(),
+        imageList[currentPictureIndex].getPaintColor(),
+        imageList[currentPictureIndex].getPaintColor(),
         AnimatedIcons.menu_close //To principal button
         );
   }
@@ -75,16 +81,13 @@ class _DrawImageViewState extends State<DrawImageView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("點餐"),
-      ),
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 1,
             child: IndexedStack(
               index: currentPictureIndex,
-              children: widget.imageList,
+              children: imageList,
             ),
           ),
           Container(
@@ -94,7 +97,7 @@ class _DrawImageViewState extends State<DrawImageView>
             child: Stack(
               children: <Widget>[
                 Visibility(
-                  visible: widget.imageList[currentPictureIndex].getHasDrawed(),
+                  visible: imageList[currentPictureIndex].getHasDrawed(),
                   child: Positioned(
                     left: 30,
                     top: 20,
@@ -105,7 +108,7 @@ class _DrawImageViewState extends State<DrawImageView>
                         child: IconButton(
                           iconSize: 35,
                           onPressed: () {
-                            widget.imageList[currentPictureIndex].reset();
+                            imageList[currentPictureIndex].reset();
                           },
                           icon: Icon(
                             Icons.refresh,
@@ -117,7 +120,7 @@ class _DrawImageViewState extends State<DrawImageView>
                   ),
                 ),
                 Visibility(
-                  visible: widget.imageList[currentPictureIndex].getHasDrawed(),
+                  visible: imageList[currentPictureIndex].getHasDrawed(),
                   child: Positioned(
                     left: 130,
                     top: 20,
@@ -128,7 +131,7 @@ class _DrawImageViewState extends State<DrawImageView>
                         child: IconButton(
                           iconSize: 35,
                           onPressed: () {
-                            widget.imageList[currentPictureIndex].undo();
+                            imageList[currentPictureIndex].undo();
                           },
                           icon: Icon(
                             Icons.undo,
@@ -149,7 +152,7 @@ class _DrawImageViewState extends State<DrawImageView>
                         onPressed: () {
                           setState(() {
                             drawMode = !drawMode;
-                            widget.imageList[currentPictureIndex].changeMode();
+                            imageList[currentPictureIndex].changeMode();
                           });
                         },
                         icon: Icon(
@@ -175,8 +178,10 @@ class _DrawImageViewState extends State<DrawImageView>
                             setState(() {
                               currentPictureIndex--;
                             });
-                            widget.imageList[currentPictureIndex].setCurrentDrawMode(drawMode);
-                            widget.imageList[currentPictureIndex].changePaintColor(paintColor);
+                            imageList[currentPictureIndex]
+                                .setCurrentDrawMode(drawMode);
+                            imageList[currentPictureIndex]
+                                .changePaintColor(paintColor);
                           },
                           icon: Icon(
                             Icons.keyboard_arrow_left,
@@ -188,8 +193,8 @@ class _DrawImageViewState extends State<DrawImageView>
                   ),
                 ),
                 Visibility(
-                  visible: widget.imageList.length > 1 &&
-                      currentPictureIndex != widget.imageList.length - 1,
+                  visible: imageList.length > 1 &&
+                      currentPictureIndex != imageList.length - 1,
                   child: Positioned(
                     right: 30,
                     top: 20,
@@ -203,8 +208,10 @@ class _DrawImageViewState extends State<DrawImageView>
                             setState(() {
                               currentPictureIndex++;
                             });
-                            widget.imageList[currentPictureIndex].setCurrentDrawMode(drawMode);
-                            widget.imageList[currentPictureIndex].changePaintColor(paintColor);
+                            imageList[currentPictureIndex]
+                                .setCurrentDrawMode(drawMode);
+                            imageList[currentPictureIndex]
+                                .changePaintColor(paintColor);
                           },
                           icon: Icon(
                             Icons.keyboard_arrow_right,
@@ -233,14 +240,15 @@ class _DrawImageViewState extends State<DrawImageView>
   }
 }
 
-class scalingAnimation extends FloatingActionButtonAnimator{
+class scalingAnimation extends FloatingActionButtonAnimator {
   double _x;
   double _y;
+
   @override
   Offset getOffset({Offset begin, Offset end, double progress}) {
-    _x = begin.dx +(end.dx - begin.dx)*progress ;
-    _y = begin.dy +(end.dy - begin.dy)*progress;
-    return Offset(_x,_y);
+    _x = begin.dx + (end.dx - begin.dx) * progress;
+    _y = begin.dy + (end.dy - begin.dy) * progress;
+    return Offset(_x, _y);
   }
 
   @override
