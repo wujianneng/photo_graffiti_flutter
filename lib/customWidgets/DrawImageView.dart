@@ -35,7 +35,7 @@ class _DrawImageViewState extends State<DrawImageView>
         [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     widget.imageListUrls.forEach((url) {
-      imageList.add(PictureView(url, () {
+      imageList.add(PictureView(url, (hasDrawedv) {
         setState(() {});
       }));
     });
