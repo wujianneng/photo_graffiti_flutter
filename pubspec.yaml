@@ -31,9 +31,9 @@ flutter:
     platforms:
       android:
         package: com.infitack.photograffitiflutter
-        pluginClass: DrawImageView
+        pluginClass: PhotograffitiflutterPlugin
       ios:
-        pluginClass: DrawImageView
+        pluginClass: PhotograffitiflutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
