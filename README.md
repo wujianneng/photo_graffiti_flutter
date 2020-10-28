@@ -4,7 +4,7 @@ A photo graffiti Flutter plugin.
 
 ## Getting Started
 
-![image](image.png)
+![image]("https://raw.githubusercontent.com/wujianneng/photo_graffiti_flutter/main/example/test/image.png")
 
 This project is a starting point for a Flutter
 [plug-in package](https://flutter.dev/developing-packages/),
