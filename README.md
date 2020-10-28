@@ -4,6 +4,8 @@ A photo graffiti Flutter plugin.
 
 ## Getting Started
 
+![image](image.png)
+
 This project is a starting point for a Flutter
 [plug-in package](https://flutter.dev/developing-packages/),
 a specialized package that includes platform-specific implementation code for
